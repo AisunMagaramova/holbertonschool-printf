@@ -1,71 +1,65 @@
-#include "main.h"
 #include <stdarg.h>
 #include <unistd.h>
+#include <stdio.h>
 
 /**
- * print_int - prints an integer
- * @n: integer to print
+ * print_number - int ededi yazır e  uzunlugnu qaytarır
+ * @n: çap olunacaqeded
+ *
+ * Return: çap olunan simvol sayı
  */
-static void print_int(int n)
+int print_number(int n)
 {
-	char buf[12];
-	int i = 0;
-	int is_negative = 0;
+    char buffer[50];
+    int len;
 
-	if (n == 0)
-	{
-		write(1, "0", 1);
-		return;
-	}
-	if (n < 0)
-	{
-		is_negative = 1;
-		n = -n;
-	}
-	while (n > 0)
-	{
-		buf[i++] = (n % 10) + '0';
-		n /= 10;
-	}
-	if (is_negative)
-		buf[i++] = '-';
-	while (i--)
-		write(1, &buf[i], 1);
+    len = sprintf(buffer, "%d", n);
+    write(1, buffer, len);
+    return len;
 }
 
 /**
- * _printf - simplified printf, only handles %d and %i
- * @format: format string
- * Return: number of characters printed (not implemented fully)
+ * _printf - sad  printf funksiyas�
+ * @format: format setiri
+ *
+ * Return: çap olunan simvolların sayı
  */
 int _printf(const char *format, ...)
 {
-	va_list args;
-	int i = 0;
+    va_list args;
+    int count = 0;
 
-	va_start(args, format);
-	while (format[i] != '\0')
-	{
-		if (format[i] == '%')
-		{
-			i++;
-			if (format[i] == 'd' || format[i] == 'i')
-			{
-				print_int(va_arg(args, int));
-			}
-			else
-			{
-				write(1, "%", 1);
-				if (format[i] != '\0')
-					write(1, &format[i], 1);
-			}
-		}
-		else
-		{
-			write(1, &format[i], 1);
-		}
-		i++;
-	}
-	va_end(args);
-	return (0); /* Return value ignored in this task */
+    va_start(args, format);
+
+    while (*format)
+    {
+        if (*format == '%')
+        {
+            format++;
+            if (*format == 'd' || *format == 'i')
+            {
+                int num = va_arg(args, int);
+                count += print_number(num);
+            }
+            else
+            {
+                if (*format)
+                {
+                    write(1, format, 1);
+                    count++;
+                }
+            }
+            format++;
+        }
+        else
+        {
+            write(1, format, 1);
+            count++;
+            format++;
+        }
+    }
+
+    va_end(args);
+
+    return count;
 }
