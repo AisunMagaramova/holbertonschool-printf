@@ -1,17 +1,9 @@
 #include "main.h"
 
-/**
- * main - test _printf function
- * Return: Always 0
- */
 int main(void)
 {
-	int len;
-
-	len = _printf("Hello %s!\nGrade: %c%%\n",
-		      "Spur", 'A');
-	_printf("Printed %s chars\n",
-		(len == -1) ? "no" : "some");
-
+	_printf("Character: %c\n", 'A');
+	_printf("String: %s\n", "Hello");
+	_printf("Percent: %%\n");
 	return (0);
 }
