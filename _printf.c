@@ -1,8 +1,17 @@
-#include <stdarg.h>
-#include <unistd.h>
+#include "main.h"
 
 /**
- * _printf - simplified printf handling % and %c
+ * _putchar - write char c to stdout
+ * @c: char to print
+ * Return: 1 on success
+ */
+int _putchar(char c)
+{
+	return (write(1, &c, 1));
+}
+
+/**
+ * _printf - print formatted output
  * @format: format string
  * Return: number of chars printed
  */
@@ -10,9 +19,10 @@ int _printf(const char *format, ...)
 {
 	va_list args;
 	int i = 0, count = 0;
+	char *str;
 	char c;
 
-	if (format == NULL)
+	if (!format)
 		return (-1);
 
 	va_start(args, format);
@@ -25,31 +35,43 @@ int _printf(const char *format, ...)
 			if (format[i] == 'c')
 			{
 				c = (char)va_arg(args, int);
-				write(1, &c, 1);
+				_putchar(c);
 				count++;
+			}
+			else if (format[i] == 's')
+			{
+				str = va_arg(args, char *);
+				if (!str)
+					str = "(null)";
+				while (*str)
+				{
+					_putchar(*str);
+					str++;
+					count++;
+				}
 			}
 			else if (format[i] == '%')
 			{
-				write(1, "%", 1);
+				_putchar('%');
 				count++;
 			}
 			else
 			{
-				/* Unknown format specifier, just print it as is */
-				write(1, "%", 1);
-				write(1, &format[i], 1);
+				_putchar('%');
+				_putchar(format[i]);
 				count += 2;
 			}
 			i++;
 		}
 		else
 		{
-			write(1, &format[i], 1);
+			_putchar(format[i]);
 			count++;
 			i++;
 		}
 	}
 
 	va_end(args);
+
 	return (count);
 }
