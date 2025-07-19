@@ -18,15 +18,20 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 
-	while (format[i]){
-		/* Tek '%' varsa ve  sonra heçne  yoxdursa ç */
-		if (format[i] == '%' && format[i + 1] == '\0'){
+	while (format[i])
+	{
+		/* Tek '%' varsa ve  sonra heçne  yoxdursa �*/
+		if (format[i] == '%' && format[i + 1] == '\0')
+		{
 			va_end(args);
 			return (-1);
 		}
-		if (format[i] == '%' && format[i + 1]){
+
+		if (format[i] == '%' && format[i + 1])
+		{
 			i++;
-			if (format[i] == 'c'){
+			if (format[i] == 'c')
+			{
 				ch = va_arg(args, int);
 				write(1, &ch, 1);
 				count++;
