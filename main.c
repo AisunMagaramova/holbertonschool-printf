@@ -1,8 +1,9 @@
 #include "main.h"
-int main(void){
-	_printf("A\n");
-	_printf("%c\n", 'B');
-	_printf("%s\n", "salam");
-	_printf("%%\n");
-	return 0;
+
+int main(void)
+{
+	_printf("Character: %c\n", 'A');
+	_printf("String: %s\n", "Salam");
+	_printf("Percent: %%\n");
+	return (0);
 }
