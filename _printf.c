@@ -1,15 +1,16 @@
-#include "main.h"
+#include <stdarg.h>
 #include <unistd.h>
 
 /**
- * _printf - formatlı çap funksiyası
+ * _printf - simplified printf handling % and %c
  * @format: format string
- * Return: çap olunan simvol sayı
+ * Return: number of chars printed
  */
 int _printf(const char *format, ...)
 {
 	va_list args;
 	int i = 0, count = 0;
+	char c;
 
 	if (format == NULL)
 		return (-1);
@@ -20,25 +21,26 @@ int _printf(const char *format, ...)
 	{
 		if (format[i] == '%')
 		{
-			if (format[i + 1] == '\0')  /* tək % varsa, ardınca heç nə yoxdursa */
+			i++;
+			if (format[i] == 'c')
 			{
-				va_end(args);
-				return (-1);
+				c = (char)va_arg(args, int);
+				write(1, &c, 1);
+				count++;
 			}
-			else if (format[i + 1] == '%')  /* %% isə % çap edir */
+			else if (format[i] == '%')
 			{
 				write(1, "%", 1);
 				count++;
-				i += 2;
-				continue;
 			}
 			else
 			{
+				/* Unknown format specifier, just print it as is */
 				write(1, "%", 1);
-				count++;
-				i++;
-				continue;
+				write(1, &format[i], 1);
+				count += 2;
 			}
+			i++;
 		}
 		else
 		{
@@ -47,6 +49,7 @@ int _printf(const char *format, ...)
 			i++;
 		}
 	}
+
 	va_end(args);
 	return (count);
 }
