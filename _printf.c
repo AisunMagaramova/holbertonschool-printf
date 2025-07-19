@@ -48,25 +48,24 @@ int _printf(const char *format, ...)
 				}
 			}
 			else if (format[i] == '%')
-			{
-				write(1, "%", 1);
-				count++;
-			}
-			else
-			{
-				write(1, "%", 1);
-				write(1, &format[i], 1);
-				count += 2;
-			}
-		}
-		else
-		{
-			write(1, &format[i], 1);
-			count++;
-		}
-		i++;
-	}
-
-	va_end(args);
-	return (count);
+{
+write(1, "%", 1);
+count++;
+}
+else
+{
+write(1, "%", 1);
+write(1, &format[i], 1);
+count += 2;
+}
+}
+else
+{
+write(1, &format[i], 1);
+count++;
+}
+i++;
+}
+va_end(args);
+return (count);
 }
