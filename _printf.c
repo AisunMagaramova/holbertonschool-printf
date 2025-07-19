@@ -2,9 +2,9 @@
 #include <stdarg.h>
 #include <unistd.h>
 /**
- * _printf - formatlı mətn çap edir (printf-in sadələşdirilmiş versiyası)
+ * _printf - formatlı etn çap e
  * @format: format string
- * Return: çap olunan simvolların sayı, və ya xəta (-1)
+ * Return: çap olunan simvolların sa
  */
 int _printf(const char *format, ...)
 {
@@ -20,7 +20,7 @@ int _printf(const char *format, ...)
 
     while (format[i])
     {
-        // Əgər tək '%' varsa və sonra heç nə yoxdursa → çıx
+        /* eger tek % varsa ve sonra hec ne yoxdursa onda cix */
         if (format[i] == '%' && format[i + 1] == '\0')
         {
             va_end(args);
@@ -54,7 +54,7 @@ int _printf(const char *format, ...)
             }
             else
             {
-                // Əgər tanınmayan format varsa, onu olduğu kimi çap et
+                /*bilinmeyen format varsa oldugu kimi cap et */
                 write(1, "%", 1);
                 write(1, &format[i], 1);
                 count += 2;
