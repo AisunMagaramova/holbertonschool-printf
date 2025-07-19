@@ -1,48 +1,71 @@
 #include "main.h"
+#include <stdarg.h>
 #include <unistd.h>
 
 /**
- * _printf - Custom printf implementation
- * @format: Format string
- * Return: Number of characters printed
+ * print_int - prints an integer
+ * @n: integer to print
+ */
+static void print_int(int n)
+{
+	char buf[12];
+	int i = 0;
+	int is_negative = 0;
+
+	if (n == 0)
+	{
+		write(1, "0", 1);
+		return;
+	}
+	if (n < 0)
+	{
+		is_negative = 1;
+		n = -n;
+	}
+	while (n > 0)
+	{
+		buf[i++] = (n % 10) + '0';
+		n /= 10;
+	}
+	if (is_negative)
+		buf[i++] = '-';
+	while (i--)
+		write(1, &buf[i], 1);
+}
+
+/**
+ * _printf - simplified printf, only handles %d and %i
+ * @format: format string
+ * Return: number of characters printed (not implemented fully)
  */
 int _printf(const char *format, ...)
 {
-	int i = 0, count = 0;
 	va_list args;
-
-	if (!format)
-		return (-1);
+	int i = 0;
 
 	va_start(args, format);
-	while (format[i])
+	while (format[i] != '\0')
 	{
 		if (format[i] == '%')
 		{
 			i++;
-			if (!format[i])
-				return (-1);
-
-			if (format[i] == 'c')
-				count += print_char(args);
-			else if (format[i] == 's')
-				count += print_string(args);
-			else if (format[i] == '%')
-				count += print_percent();
+			if (format[i] == 'd' || format[i] == 'i')
+			{
+				print_int(va_arg(args, int));
+			}
 			else
 			{
 				write(1, "%", 1);
-				write(1, &format[i], 1);
-				count += 2;
+				if (format[i] != '\0')
+					write(1, &format[i], 1);
 			}
 		}
 		else
 		{
 			write(1, &format[i], 1);
-			count++;
 		}
 		i++;
 	}
 	va_end(args);
-	return (count);
+	return (0); /* Return value ignored in this task */
 }
