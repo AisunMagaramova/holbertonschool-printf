@@ -1,0 +1,15 @@
+.TH _printf 3 "July 2025" "1.0" "Istifadeci terefinden yazilmis _printf funkdiyasi"
+.SH NAME
+_printf \- istifadeci terefinden yazilmis formatli cixis funksiyyasu
+.SH SYNOPSIS
+#include "main.h"
+
+int _printf(const char *format, ...);
+.SH DESCRIPTION
+_printf funksiyasi standart printf funksiyasina benzeyir ve daxil edilen format setirine esasen standart cixisa metin yazir. Muxtelif format novlerini destekleyir: %d (tam eded), %s (setir), %c (simvol) ve s.
+.SH RETURN VALUE
+Eger funksiya ugurla icra olunarsa, cixisa yazilmis simvollarin sayi qaytarilir. Sehv bas verdikde menfi deyer qayidir.
+.SH EXAMPLES
+_printf("Ad: %s, Yas: %d\n", "Ali", 25);
+.SH SEE ALSO
+printf(3), sprintf(3), puts(3)
